@@ -230,6 +230,12 @@ docs/AEM_CREDIT_LEDGER_SETTLEMENT_DESIGN.md
 docs/AEM_NETWORK_ECONOMY_CHECK_DESIGN.md
 ```
 
+Contributor process:
+
+```text
+CONTRIBUTOR_RIGOR.md
+```
+
 ## Canonical local verification
 
 Run:
