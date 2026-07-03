@@ -397,6 +397,97 @@ def structural_validate(schema_name: str, data: dict[str, Any]) -> ValidationRes
         if isinstance(data.get("artifacts"), list) and data.get("artifact_count") != len(data["artifacts"]):
             errors.append("artifact_count must equal len(artifacts)")
 
+    elif schema_name == "credit_ledger_settlement.schema.json":
+        _require(
+            data,
+            (
+                "settlement_version",
+                "settlement_currency",
+                "challenge_window_closed",
+                "contribution_receipt_count",
+                "inference_receipt_count",
+                "accepted_event_count",
+                "rejected_event_count",
+                "total_minted_micros",
+                "total_transferred_micros",
+                "net_supply_delta_micros",
+                "accounts",
+                "events",
+                "rejections",
+                "seen_spend_keys",
+                "ok",
+            ),
+            errors,
+        )
+        if data.get("settlement_currency") != "AEM_CREDIT":
+            errors.append("settlement_currency must be AEM_CREDIT")
+        if "settlement_version" in data and not isinstance(data["settlement_version"], str):
+            errors.append("settlement_version must be string")
+        if "challenge_window_closed" in data and not isinstance(data["challenge_window_closed"], bool):
+            errors.append("challenge_window_closed must be bool")
+        for key in (
+            "contribution_receipt_count",
+            "skill_receipt_count",
+            "inference_receipt_count",
+            "accepted_event_count",
+            "rejected_event_count",
+            "total_minted_micros",
+            "total_transferred_micros",
+        ):
+            if key in data and not _non_negative_int(data[key]):
+                errors.append(f"{key} must be non-negative int")
+        if "net_supply_delta_micros" in data and not isinstance(data["net_supply_delta_micros"], int):
+            errors.append("net_supply_delta_micros must be int")
+        if "ok" in data and not isinstance(data["ok"], bool):
+            errors.append("ok must be bool")
+        if "seen_spend_keys" in data and not _str_list(data["seen_spend_keys"]):
+            errors.append("seen_spend_keys must be list[str]")
+        if "accounts" in data:
+            accounts = data["accounts"]
+            if not isinstance(accounts, list):
+                errors.append("accounts must be list[account-balance]")
+            else:
+                for item in accounts:
+                    if not isinstance(item, dict):
+                        errors.append("account entry must be object")
+                        continue
+                    if not isinstance(item.get("account"), str):
+                        errors.append("account entry account must be string")
+                    if not isinstance(item.get("balance_micros"), int):
+                        errors.append("account entry balance_micros must be int")
+        if "events" in data:
+            allowed_event_types = {"contribution_mint", "skill_mint", "inference_debit", "inference_host_credit"}
+            events = data["events"]
+            if not isinstance(events, list):
+                errors.append("events must be list[settlement-event]")
+            else:
+                for item in events:
+                    if not isinstance(item, dict):
+                        errors.append("event entry must be object")
+                        continue
+                    for key in ("event_id", "source_receipt_id", "account", "reason"):
+                        if not isinstance(item.get(key), str):
+                            errors.append(f"event {key} must be string")
+                    if item.get("event_type") not in allowed_event_types:
+                        errors.append("event_type invalid")
+                    if not isinstance(item.get("amount_micros"), int):
+                        errors.append("event amount_micros must be int")
+                    if item.get("settlement_currency") != "AEM_CREDIT":
+                        errors.append("event settlement_currency must be AEM_CREDIT")
+        if "rejections" in data:
+            rejections = data["rejections"]
+            if not isinstance(rejections, list):
+                errors.append("rejections must be list[rejection]")
+            else:
+                for item in rejections:
+                    if not isinstance(item, dict):
+                        errors.append("rejection entry must be object")
+                        continue
+                    if not isinstance(item.get("source_receipt_id"), str):
+                        errors.append("rejection source_receipt_id must be string")
+                    if not isinstance(item.get("reason"), str):
+                        errors.append("rejection reason must be string")
+
     else:
         errors.append(f"unknown schema: {schema_name}")
 
