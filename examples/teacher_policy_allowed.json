@@ -1,0 +1,12 @@
+{
+  "teacher_id": "allowed-open-teacher-demo",
+  "teacher_type": "open_weight",
+  "license": "research-demo",
+  "allowed_for_training": true,
+  "allowed_outputs_retention": true,
+  "allowed_for_commercial_use": true,
+  "terms_version": "demo-2026-07-01",
+  "data_policy": "outputs may be used for verified distillation in this demo",
+  "notes": "Example card for policy-gated AEM distillation tests.",
+  "signature": "sig:allowed-open-teacher-demo"
+}

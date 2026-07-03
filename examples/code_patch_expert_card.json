@@ -1,0 +1,25 @@
+{
+  "expert_id": "code_patch_7b_q4_lora_v0",
+  "base_model_hash": "base:open-coder-7b:q4:demo",
+  "expert_type": "code_patch",
+  "quantization": "4bit_nf4+lora",
+  "vram_min_gb": 12,
+  "training_objective": "patch small bugs from issue + failing test context",
+  "domains": ["code", "python", "unit_tests", "bugfix"],
+  "eval_delta": {
+    "code_patch": 0.071,
+    "python_unit_tests": 0.054
+  },
+  "negative_eval_delta": {
+    "general_reasoning": -0.004,
+    "instruction_following": -0.003
+  },
+  "risk_scores": {
+    "duplicate": 0.31,
+    "backdoor": 0.01
+  },
+  "latency_ms": 2100,
+  "license": "research-demo",
+  "signature": "sig:code_patch_7b_q4_lora_v0",
+  "data_hashes": ["sha256:demo-bugfix-shard"]
+}

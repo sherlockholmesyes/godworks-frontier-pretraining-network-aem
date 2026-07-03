@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM TeacherPolicyCard",
+  "type": "object",
+  "required": ["teacher_id", "teacher_type", "license", "allowed_for_training", "allowed_outputs_retention", "allowed_for_commercial_use", "terms_version"],
+  "properties": {
+    "teacher_id": { "type": "string" },
+    "teacher_type": { "type": "string" },
+    "license": { "type": "string" },
+    "allowed_for_training": { "type": "boolean" },
+    "allowed_outputs_retention": { "type": "boolean" },
+    "allowed_for_commercial_use": { "type": "boolean" },
+    "terms_version": { "type": "string" },
+    "data_policy": { "type": "string" },
+    "notes": { "type": "string" },
+    "signature": { "type": "string" }
+  },
+  "additionalProperties": false
+}

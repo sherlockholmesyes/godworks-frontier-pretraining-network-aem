@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM EvidenceStatus",
+  "type": "object",
+  "required": ["status_version", "local_ci_command", "local_ci_gates", "docs_check_command", "docs_check_gates", "docs_sync_command", "docs_sync_gates", "artifact_index", "artifacts", "upload_policy", "upload_drift"],
+  "properties": {
+    "status_version": { "type": "string" },
+    "local_ci_command": { "type": "string" },
+    "local_ci_gates": { "type": "array", "items": { "type": "string" } },
+    "docs_check_command": { "type": "string" },
+    "docs_check_gates": { "type": "array", "items": { "type": "string" } },
+    "docs_sync_command": { "type": "string" },
+    "docs_sync_gates": { "type": "array", "items": { "type": "string" } },
+    "artifact_index": {
+      "type": "object",
+      "required": ["index_version", "artifact_count", "paths", "seal_stage_counts", "role_counts"],
+      "properties": {
+        "index_version": { "type": "string" },
+        "artifact_count": { "type": "integer", "minimum": 0 },
+        "paths": { "type": "array", "items": { "type": "string" } },
+        "seal_stage_counts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "role_counts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "seal_stage", "role", "schema", "verifier"],
+        "properties": {
+          "path": { "type": "string" },
+          "seal_stage": { "type": "string" },
+          "role": { "type": "string" },
+          "schema": { "type": "string" },
+          "verifier": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "upload_policy": {
+      "type": "object",
+      "required": ["policy_version", "class_counts", "terminal_receipts", "second_stage_sealed_artifacts"],
+      "properties": {
+        "policy_version": { "type": "string" },
+        "class_counts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "terminal_receipts": { "type": "array", "items": { "type": "string" } },
+        "second_stage_sealed_artifacts": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "upload_drift": {
+      "type": "object",
+      "required": ["ok", "markers_present", "order_matches", "missing_from_ci", "extra_in_ci", "duplicate_ci_paths"],
+      "properties": {
+        "ok": { "type": "boolean" },
+        "markers_present": { "type": "boolean" },
+        "order_matches": { "type": "boolean" },
+        "missing_from_ci": { "type": "array", "items": { "type": "string" } },
+        "extra_in_ci": { "type": "array", "items": { "type": "string" } },
+        "duplicate_ci_paths": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

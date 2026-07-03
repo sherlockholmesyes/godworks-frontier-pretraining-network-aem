@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM EvidencePipelineResult",
+  "type": "object",
+  "required": ["run_dir", "ok", "artifacts", "patch_gate", "trace_compact", "trace_report", "evidence_summary", "evidence_bundle_manifest", "evidence_verify_report"],
+  "properties": {
+    "run_dir": { "type": "string" },
+    "ok": { "type": "boolean" },
+    "artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "patch_gate": { "type": "object" },
+    "trace_compact": { "type": "object" },
+    "trace_report": { "type": "object" },
+    "evidence_summary": { "type": "object" },
+    "evidence_bundle_manifest": { "type": "object" },
+    "evidence_verify_report": { "type": "object" }
+  },
+  "additionalProperties": false
+}

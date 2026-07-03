@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM HostAdvertisement",
+  "type": "object",
+  "required": ["advertisement_version", "advertisement_id", "node_id", "expert_id", "expert_card_hash", "locality_bucket", "expires_at", "offer", "availability", "policy", "receipt_requirements", "signature"],
+  "properties": {
+    "advertisement_version": { "type": "string" },
+    "advertisement_id": { "type": "string" },
+    "node_id": { "type": "string" },
+    "expert_id": { "type": "string" },
+    "expert_card_hash": { "type": "string" },
+    "locality_bucket": { "type": "string" },
+    "expires_at": { "type": "string" },
+    "signature": { "type": "string" },
+    "offer": {
+      "type": "object",
+      "required": ["roles", "accepted_payment", "inference_credit_rate_micros", "training_credit_rate_micros", "verification_credit_rate_micros", "min_job_credits_micros"],
+      "properties": {
+        "roles": { "type": "array", "items": { "enum": ["inference", "training", "verification"] } },
+        "accepted_payment": { "type": "array", "items": { "const": "AEM_CREDIT" } },
+        "inference_credit_rate_micros": { "type": "integer", "minimum": 0 },
+        "training_credit_rate_micros": { "type": "integer", "minimum": 0 },
+        "verification_credit_rate_micros": { "type": "integer", "minimum": 0 },
+        "min_job_credits_micros": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "availability": {
+      "type": "object",
+      "required": ["capacity_class", "max_concurrent_jobs", "endpoint_hint", "uptime_window_hours"],
+      "properties": {
+        "capacity_class": { "type": "string" },
+        "max_concurrent_jobs": { "type": "integer", "minimum": 1 },
+        "endpoint_hint": { "type": "string" },
+        "uptime_window_hours": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "required": ["accepted_task_classes", "max_prompt_privacy_class", "sandbox_profile"],
+      "properties": {
+        "accepted_task_classes": { "type": "array", "items": { "type": "string" } },
+        "max_prompt_privacy_class": { "enum": ["public", "redacted", "private_prohibited"] },
+        "sandbox_profile": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "receipt_requirements": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

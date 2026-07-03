@@ -1,0 +1,181 @@
+{
+  "artifact_index": {
+    "artifact_count": 13,
+    "index_version": "2026-07-01.v3",
+    "paths": [
+      "runs/metadata/evidence_metadata_report.json",
+      "runs/patch_gate_demo/route_trace.jsonl",
+      "runs/patch_gate_demo/route_trace.compact.jsonl",
+      "runs/patch_gate_demo/route_trace.compact.jsonl.manifest.json",
+      "runs/patch_gate_demo/trace_report.json",
+      "runs/patch_gate_demo/evidence_summary.json",
+      "runs/patch_gate_demo/evidence_bundle_manifest.json",
+      "runs/patch_gate_demo/evidence_verify_report.json",
+      "runs/patch_gate_demo/pipeline_result.json",
+      "runs/patch_gate_demo/evidence_seal_manifest.json",
+      "runs/patch_gate_demo/evidence_seal_verify_report.json",
+      "runs/upload/evidence_second_stage_seal_manifest.json",
+      "runs/upload/evidence_second_stage_verify_report.json"
+    ],
+    "role_counts": {
+      "post_seal_verification_receipt": 1,
+      "pre_evidence_metadata_receipt": 1,
+      "seal_manifest": 1,
+      "sealed_trace_evidence": 8,
+      "second_stage_seal_manifest": 1,
+      "terminal_second_stage_verify_receipt": 1
+    },
+    "seal_stage_counts": {
+      "first_stage_trace_seal": 8,
+      "first_stage_trace_seal_manifest": 1,
+      "second_stage_upload_receipt_seal": 2,
+      "second_stage_upload_receipt_seal_manifest": 1,
+      "terminal_receipt_boundary": 1
+    }
+  },
+  "artifacts": [
+    {
+      "path": "runs/metadata/evidence_metadata_report.json",
+      "role": "pre_evidence_metadata_receipt",
+      "schema": "evidence_metadata_report.schema.json",
+      "seal_stage": "second_stage_upload_receipt_seal",
+      "verifier": "aem_poc.evidence_metadata_check, evidence_second_stage_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/route_trace.jsonl",
+      "role": "sealed_trace_evidence",
+      "schema": "route_trace.schema.json per row",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "TraceStore.append, TraceStore.read_all(validate=True), evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/route_trace.compact.jsonl",
+      "role": "sealed_trace_evidence",
+      "schema": "route_trace.schema.json per row",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "canonical rewrite, validated replay, evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/route_trace.compact.jsonl.manifest.json",
+      "role": "sealed_trace_evidence",
+      "schema": "trace_rewrite_manifest.schema.json",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "schema validation, evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/trace_report.json",
+      "role": "sealed_trace_evidence",
+      "schema": "trace_report.schema.json",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "trace report schema validation, evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_summary.json",
+      "role": "sealed_trace_evidence",
+      "schema": "evidence_summary.schema.json",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "summary schema validation, evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_bundle_manifest.json",
+      "role": "sealed_trace_evidence",
+      "schema": "evidence_bundle_manifest.schema.json",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "aem_poc.evidence_verify, evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_verify_report.json",
+      "role": "sealed_trace_evidence",
+      "schema": "evidence_verify_report.schema.json",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "verify report schema validation, evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/pipeline_result.json",
+      "role": "sealed_trace_evidence",
+      "schema": "evidence_pipeline_result.schema.json",
+      "seal_stage": "first_stage_trace_seal",
+      "verifier": "pipeline result schema validation, evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_seal_manifest.json",
+      "role": "seal_manifest",
+      "schema": "evidence_seal_manifest.schema.json",
+      "seal_stage": "first_stage_trace_seal_manifest",
+      "verifier": "aem_poc.evidence_seal_verify"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_seal_verify_report.json",
+      "role": "post_seal_verification_receipt",
+      "schema": "evidence_seal_verify_report.schema.json",
+      "seal_stage": "second_stage_upload_receipt_seal",
+      "verifier": "evidence_second_stage_seal_verify"
+    },
+    {
+      "path": "runs/upload/evidence_second_stage_seal_manifest.json",
+      "role": "second_stage_seal_manifest",
+      "schema": "evidence_second_stage_seal_manifest.schema.json",
+      "seal_stage": "second_stage_upload_receipt_seal_manifest",
+      "verifier": "aem_poc.evidence_second_stage_seal_verify"
+    },
+    {
+      "path": "runs/upload/evidence_second_stage_verify_report.json",
+      "role": "terminal_second_stage_verify_receipt",
+      "schema": "evidence_second_stage_verify_report.schema.json",
+      "seal_stage": "terminal_receipt_boundary",
+      "verifier": "terminal_verification_receipts policy"
+    }
+  ],
+  "docs_check_command": "make evidence-docs-check",
+  "docs_check_gates": [
+    "evidence-artifact-index",
+    "evidence-artifact-index-md-check",
+    "evidence-status-example-check"
+  ],
+  "docs_sync_command": "make evidence-docs-sync",
+  "docs_sync_gates": [
+    "evidence-artifact-index-sync",
+    "evidence-artifact-index-md-sync",
+    "evidence-status-example-sync"
+  ],
+  "local_ci_command": "make evidence-local-ci",
+  "local_ci_gates": [
+    "test",
+    "evidence-artifact-index",
+    "evidence-artifact-index-md-check",
+    "evidence-status",
+    "evidence-metadata-check",
+    "evidence-upload-policy",
+    "evidence-upload-drift",
+    "evidence-seal-verify-demo",
+    "evidence-second-stage-seal",
+    "evidence-second-stage-seal-verify"
+  ],
+  "status_version": "2026-07-01.v1",
+  "upload_drift": {
+    "duplicate_ci_paths": [],
+    "extra_in_ci": [],
+    "markers_present": true,
+    "missing_from_ci": [],
+    "ok": true,
+    "order_matches": true
+  },
+  "upload_policy": {
+    "class_counts": {
+      "post_seal_verification_receipts": 1,
+      "pre_evidence_metadata_receipts": 1,
+      "seal_manifests": 1,
+      "sealed_trace_evidence": 8,
+      "second_stage_seal_manifests": 1,
+      "terminal_verification_receipts": 1
+    },
+    "policy_version": "2026-07-01.v1",
+    "second_stage_sealed_artifacts": [
+      "runs/metadata/evidence_metadata_report.json",
+      "runs/patch_gate_demo/evidence_seal_verify_report.json"
+    ],
+    "terminal_receipts": [
+      "runs/upload/evidence_second_stage_verify_report.json"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "task_id": "task-code-json-1",
+  "task_type": "code_patch",
+  "prompt": "Make the add(a, b) function pass the unit test.",
+  "required_capabilities": ["code", "python"],
+  "constraints": {
+    "objective_verifier": "python_unittest",
+    "output": "unified_diff",
+    "patch_backend": "stdlib_one_file",
+    "allowed_files": ["calc.py"],
+    "blocked_prefixes": [".git/", "secrets/", "private/"],
+    "max_patch_bytes": 4096,
+    "max_changed_files": 1
+  },
+  "budget": {
+    "node_vram_gb": 12,
+    "max_latency_ms": 8000
+  },
+  "privacy_level": "public"
+}

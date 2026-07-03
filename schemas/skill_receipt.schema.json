@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM SkillReceipt",
+  "type": "object",
+  "required": ["receipt_version", "skill_receipt_id", "contributor_id", "contributor_node_id", "skill_id", "skill_version", "title", "skill_type", "skill_contract", "content_commitment", "source_policy", "execution_evidence", "evaluation", "credit_policy", "anti_distillation", "receipt_requirements", "verifier_report_refs", "signature"],
+  "properties": {
+    "receipt_version": { "type": "string" },
+    "skill_receipt_id": { "type": "string" },
+    "contributor_id": { "type": "string" },
+    "contributor_node_id": { "type": "string" },
+    "skill_id": { "type": "string" },
+    "skill_version": { "type": "string" },
+    "title": { "type": "string" },
+    "skill_type": { "enum": ["prompt_operator", "tool_workflow", "verification_skill", "training_recipe", "routing_policy", "domain_procedure", "data_curation_procedure"] },
+    "skill_contract": {
+      "type": "object",
+      "required": ["input_contract", "operation", "output_contract", "required_tools", "runtime_constraints", "determinism_level"],
+      "properties": {
+        "input_contract": { "type": "string" },
+        "operation": { "type": "string" },
+        "output_contract": { "type": "string" },
+        "required_tools": { "type": "array", "items": { "type": "string" } },
+        "runtime_constraints": { "type": "array", "items": { "type": "string" } },
+        "determinism_level": { "enum": ["deterministic", "bounded_stochastic", "human_assisted"] }
+      },
+      "additionalProperties": false
+    },
+    "content_commitment": {
+      "type": "object",
+      "required": ["skill_hash", "format", "size_bytes", "redaction_level"],
+      "properties": {
+        "skill_hash": { "type": "string" },
+        "format": { "type": "string" },
+        "size_bytes": { "type": "integer", "minimum": 1 },
+        "redaction_level": { "enum": ["public", "redacted", "private_commitment"] }
+      },
+      "additionalProperties": false
+    },
+    "source_policy": {
+      "type": "object",
+      "required": ["origin", "license", "allowed_for_training", "allowed_for_commercial_use", "human_authored_or_owned", "contains_third_party_model_outputs", "third_party_terms_verified"],
+      "properties": {
+        "origin": { "type": "string" },
+        "license": { "type": "string" },
+        "allowed_for_training": { "type": "boolean" },
+        "allowed_for_commercial_use": { "type": "boolean" },
+        "human_authored_or_owned": { "type": "boolean" },
+        "contains_third_party_model_outputs": { "type": "boolean" },
+        "third_party_terms_verified": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "execution_evidence": {
+      "type": "object",
+      "required": ["demo_task_ids", "execution_receipts", "before_score", "after_score", "delta_score", "sample_count"],
+      "properties": {
+        "demo_task_ids": { "type": "array", "items": { "type": "string" } },
+        "execution_receipts": { "type": "array", "items": { "type": "string" } },
+        "before_score": { "type": "number" },
+        "after_score": { "type": "number" },
+        "delta_score": { "type": "number" },
+        "sample_count": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "evaluation": {
+      "type": "object",
+      "required": ["target_domains", "required_tests", "measurable_delta", "adoption_criteria", "kill_criteria"],
+      "properties": {
+        "target_domains": { "type": "array", "items": { "type": "string" } },
+        "required_tests": { "type": "array", "items": { "type": "string" } },
+        "measurable_delta": { "type": "string" },
+        "adoption_criteria": { "type": "array", "items": { "type": "string" } },
+        "kill_criteria": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "credit_policy": {
+      "type": "object",
+      "required": ["settlement_currency", "credit_account", "credit_basis", "base_credit_micros", "quality_multiplier_floor", "quality_multiplier_cap", "resale_allowed"],
+      "properties": {
+        "settlement_currency": { "const": "AEM_CREDIT" },
+        "credit_account": { "type": "string" },
+        "credit_basis": { "const": "verified_skill_use" },
+        "base_credit_micros": { "type": "integer", "minimum": 0 },
+        "quality_multiplier_floor": { "type": "number", "minimum": 0 },
+        "quality_multiplier_cap": { "type": "number", "minimum": 0 },
+        "resale_allowed": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "anti_distillation": {
+      "type": "object",
+      "required": ["no_unauthorized_competitor_distillation", "allowed_teacher_policy_required", "export_policy"],
+      "properties": {
+        "no_unauthorized_competitor_distillation": { "type": "boolean" },
+        "allowed_teacher_policy_required": { "type": "boolean" },
+        "export_policy": { "enum": ["open_receipt", "licensed_receipt", "private_commitment"] }
+      },
+      "additionalProperties": false
+    },
+    "receipt_requirements": { "type": "array", "items": { "type": "string" } },
+    "verifier_report_refs": { "type": "array", "items": { "type": "string" } },
+    "signature": { "type": "string" }
+  },
+  "additionalProperties": false
+}

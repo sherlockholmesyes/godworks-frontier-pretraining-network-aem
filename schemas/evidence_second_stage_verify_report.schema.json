@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM EvidenceSecondStageVerifyReport",
+  "type": "object",
+  "required": ["manifest_path", "stage", "policy_version", "inherits_first_stage_seal", "artifact_count", "checked_count", "excluded_artifacts", "count_ok", "failure_count", "ok", "checks"],
+  "properties": {
+    "manifest_path": { "type": "string" },
+    "stage": { "type": "string" },
+    "policy_version": { "type": "string" },
+    "inherits_first_stage_seal": { "type": "string" },
+    "artifact_count": { "type": "integer", "minimum": 0 },
+    "checked_count": { "type": "integer", "minimum": 0 },
+    "excluded_artifacts": { "type": "array", "items": { "type": "string" } },
+    "count_ok": { "type": "boolean" },
+    "failure_count": { "type": "integer", "minimum": 0 },
+    "ok": { "type": "boolean" },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["recorded_path", "resolved_path", "role", "exists", "expected_size_bytes", "actual_size_bytes", "size_ok", "expected_sha256", "actual_sha256", "hash_ok", "ok"],
+        "properties": {
+          "recorded_path": { "type": "string" },
+          "resolved_path": { "type": "string" },
+          "role": { "type": "string" },
+          "exists": { "type": "boolean" },
+          "expected_size_bytes": { "type": "integer", "minimum": 0 },
+          "actual_size_bytes": { "type": "integer", "minimum": 0 },
+          "size_ok": { "type": "boolean" },
+          "expected_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+          "actual_sha256": { "type": ["string", "null"], "minLength": 64, "maxLength": 64 },
+          "hash_ok": { "type": "boolean" },
+          "ok": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM TraceReport",
+  "type": "object",
+  "required": ["path", "row_count", "task_types", "chosen_experts", "file_hash", "rows_hash"],
+  "properties": {
+    "path": { "type": "string" },
+    "row_count": { "type": "integer", "minimum": 0 },
+    "task_types": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "chosen_experts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "file_hash": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "rows_hash": { "type": "string", "minLength": 64, "maxLength": 64 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM EvidenceSealManifest",
+  "type": "object",
+  "required": ["run_dir", "artifact_count", "sealed_artifacts", "excluded_artifacts"],
+  "properties": {
+    "run_dir": { "type": "string" },
+    "artifact_count": { "type": "integer", "minimum": 0 },
+    "sealed_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "size_bytes", "sha256"],
+        "properties": {
+          "path": { "type": "string" },
+          "size_bytes": { "type": "integer", "minimum": 0 },
+          "sha256": { "type": "string", "minLength": 64, "maxLength": 64 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "excluded_artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM TraceRewriteManifest",
+  "type": "object",
+  "required": ["source_path", "output_path", "row_count", "source_hash", "output_hash", "rows_hash"],
+  "properties": {
+    "source_path": { "type": "string" },
+    "output_path": { "type": "string" },
+    "row_count": { "type": "integer", "minimum": 0 },
+    "source_hash": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "output_hash": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "rows_hash": { "type": "string", "minLength": 64, "maxLength": 64 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM Knowledge Contribution Receipt",
+  "type": "object",
+  "required": ["receipt_version", "receipt_id", "contributor_id", "contributor_node_id", "contribution_type", "title", "content_commitment", "source_policy", "training_use", "credit_policy", "evaluation", "anti_distillation", "receipts_required", "signature"],
+  "properties": {
+    "receipt_version": { "type": "string" },
+    "receipt_id": { "type": "string" },
+    "contributor_id": { "type": "string" },
+    "contributor_node_id": { "type": "string" },
+    "contribution_type": { "enum": ["knowledge", "skill", "data_shard", "eval", "curriculum", "operator"] },
+    "title": { "type": "string" },
+    "content_commitment": {
+      "type": "object",
+      "required": ["content_hash", "format", "size_bytes", "redaction_level"],
+      "properties": {
+        "content_hash": { "type": "string" },
+        "format": { "type": "string" },
+        "size_bytes": { "type": "integer", "minimum": 1 },
+        "redaction_level": { "enum": ["public", "redacted", "private_commitment"] }
+      },
+      "additionalProperties": false
+    },
+    "source_policy": {
+      "type": "object",
+      "required": ["origin", "license", "allowed_for_training", "allowed_for_commercial_use", "human_authored_or_owned", "contains_third_party_model_outputs", "third_party_terms_verified"],
+      "properties": {
+        "origin": { "type": "string" },
+        "license": { "type": "string" },
+        "allowed_for_training": { "type": "boolean" },
+        "allowed_for_commercial_use": { "type": "boolean" },
+        "human_authored_or_owned": { "type": "boolean" },
+        "contains_third_party_model_outputs": { "type": "boolean" },
+        "third_party_terms_verified": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "training_use": {
+      "type": "object",
+      "required": ["target_domains", "allowed_uses", "forbidden_uses", "bootstrap_stage"],
+      "properties": {
+        "target_domains": { "type": "array", "items": { "type": "string" } },
+        "allowed_uses": { "type": "array", "items": { "type": "string" } },
+        "forbidden_uses": { "type": "array", "items": { "type": "string" } },
+        "bootstrap_stage": { "enum": ["seed", "expert_refinement", "router_training", "eval_hardening", "distillation_memory"] }
+      },
+      "additionalProperties": false
+    },
+    "credit_policy": {
+      "type": "object",
+      "required": ["settlement_currency", "credit_account", "credit_basis", "base_credit_micros", "quality_multiplier_floor", "quality_multiplier_cap", "resale_allowed"],
+      "properties": {
+        "settlement_currency": { "const": "AEM_CREDIT" },
+        "credit_account": { "type": "string" },
+        "credit_basis": { "enum": ["accepted_delta", "verified_skill_use", "eval_improvement", "curation_quality", "operator_adoption"] },
+        "base_credit_micros": { "type": "integer", "minimum": 0 },
+        "quality_multiplier_floor": { "type": "number", "minimum": 0 },
+        "quality_multiplier_cap": { "type": "number", "minimum": 0 },
+        "resale_allowed": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "evaluation": {
+      "type": "object",
+      "required": ["required_tests", "measurable_delta", "adoption_criteria", "kill_criteria"],
+      "properties": {
+        "required_tests": { "type": "array", "items": { "type": "string" } },
+        "measurable_delta": { "type": "string" },
+        "adoption_criteria": { "type": "array", "items": { "type": "string" } },
+        "kill_criteria": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "anti_distillation": {
+      "type": "object",
+      "required": ["no_unauthorized_competitor_distillation", "allowed_teacher_policy_required", "export_policy"],
+      "properties": {
+        "no_unauthorized_competitor_distillation": { "type": "boolean" },
+        "allowed_teacher_policy_required": { "type": "boolean" },
+        "export_policy": { "enum": ["open_receipt", "licensed_receipt", "private_commitment"] }
+      },
+      "additionalProperties": false
+    },
+    "receipts_required": { "type": "array", "items": { "type": "string" } },
+    "signature": { "type": "string" }
+  },
+  "additionalProperties": false
+}

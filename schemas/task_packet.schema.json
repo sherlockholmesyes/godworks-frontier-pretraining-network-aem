@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://godworks.local/aem/task_packet.schema.json",
+  "title": "AEM TaskPacket",
+  "type": "object",
+  "required": ["task_id", "task_type", "prompt"],
+  "properties": {
+    "task_id": { "type": "string", "minLength": 1 },
+    "task_type": { "type": "string", "minLength": 1 },
+    "prompt": { "type": "string", "minLength": 1 },
+    "required_capabilities": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "objective_verifier": { "type": "string" },
+        "output": { "type": "string" },
+        "patch_backend": {
+          "type": "string",
+          "enum": ["stdlib_one_file", "auto", "external"]
+        },
+        "test_command": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "allowed_files": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "blocked_prefixes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "max_patch_bytes": { "type": "integer", "minimum": 1 },
+        "max_changed_files": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "privacy_level": {
+      "type": "string",
+      "default": "public"
+    }
+  },
+  "additionalProperties": false
+}

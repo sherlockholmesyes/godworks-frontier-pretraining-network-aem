@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM EvidenceArtifactIndex",
+  "type": "object",
+  "required": ["index_version", "artifact_count", "artifacts"],
+  "properties": {
+    "index_version": { "type": "string" },
+    "artifact_count": { "type": "integer", "minimum": 0 },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "producer", "schema", "verifier", "purpose", "seal_stage", "role"],
+        "properties": {
+          "path": { "type": "string" },
+          "producer": { "type": "string" },
+          "schema": { "type": "string" },
+          "verifier": { "type": "string" },
+          "purpose": { "type": "string" },
+          "seal_stage": { "type": "string" },
+          "role": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,5 @@
+--- a/private/config.txt
++++ b/private/config.txt
+@@ -1 +1 @@
+-old
++new

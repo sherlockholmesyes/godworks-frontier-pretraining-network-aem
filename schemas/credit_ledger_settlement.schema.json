@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM CreditLedger Settlement Report",
+  "type": "object",
+  "required": ["settlement_version", "settlement_currency", "challenge_window_closed", "contribution_receipt_count", "inference_receipt_count", "accepted_event_count", "rejected_event_count", "total_minted_micros", "total_transferred_micros", "net_supply_delta_micros", "accounts", "events", "rejections", "seen_spend_keys", "ok"],
+  "properties": {
+    "settlement_version": { "type": "string" },
+    "settlement_currency": { "const": "AEM_CREDIT" },
+    "challenge_window_closed": { "type": "boolean" },
+    "contribution_receipt_count": { "type": "integer", "minimum": 0 },
+    "skill_receipt_count": { "type": "integer", "minimum": 0 },
+    "inference_receipt_count": { "type": "integer", "minimum": 0 },
+    "accepted_event_count": { "type": "integer", "minimum": 0 },
+    "rejected_event_count": { "type": "integer", "minimum": 0 },
+    "total_minted_micros": { "type": "integer", "minimum": 0 },
+    "total_transferred_micros": { "type": "integer", "minimum": 0 },
+    "net_supply_delta_micros": { "type": "integer" },
+    "accounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["account", "balance_micros"],
+        "properties": {
+          "account": { "type": "string" },
+          "balance_micros": { "type": "integer" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "event_type", "source_receipt_id", "account", "amount_micros", "settlement_currency", "reason"],
+        "properties": {
+          "event_id": { "type": "string" },
+          "event_type": { "enum": ["contribution_mint", "skill_mint", "inference_debit", "inference_host_credit"] },
+          "source_receipt_id": { "type": "string" },
+          "account": { "type": "string" },
+          "amount_micros": { "type": "integer" },
+          "settlement_currency": { "const": "AEM_CREDIT" },
+          "reason": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rejections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_receipt_id", "reason"],
+        "properties": {
+          "source_receipt_id": { "type": "string" },
+          "reason": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "seen_spend_keys": { "type": "array", "items": { "type": "string" } },
+    "ok": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

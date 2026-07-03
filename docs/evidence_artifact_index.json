@@ -1,0 +1,123 @@
+{
+  "index_version": "2026-07-01.v3",
+  "artifact_count": 13,
+  "artifacts": [
+    {
+      "path": "runs/metadata/evidence_metadata_report.json",
+      "producer": "aem_poc.evidence_metadata_check.write_metadata_report",
+      "schema": "evidence_metadata_report.schema.json",
+      "verifier": "aem_poc.evidence_metadata_check, evidence_second_stage_seal_verify",
+      "purpose": "Durable pre-evidence receipt for metadata integrity checks before evidence generation.",
+      "seal_stage": "second_stage_upload_receipt_seal",
+      "role": "pre_evidence_metadata_receipt"
+    },
+    {
+      "path": "runs/patch_gate_demo/route_trace.jsonl",
+      "producer": "aem_poc.patch_gate_demo.run via TraceStore.append",
+      "schema": "route_trace.schema.json per row",
+      "verifier": "TraceStore.append, TraceStore.read_all(validate=True), evidence_seal_verify",
+      "purpose": "Raw route, admission, workspace, and command evidence for the patch-gate demo.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/route_trace.compact.jsonl",
+      "producer": "aem_poc.trace_maint.compact_trace via TraceStore.rewrite_canonical",
+      "schema": "route_trace.schema.json per row",
+      "verifier": "canonical rewrite, validated replay, evidence_seal_verify",
+      "purpose": "Canonical compact trace for deterministic replay and downstream reporting.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/route_trace.compact.jsonl.manifest.json",
+      "producer": "TraceStore.rewrite_canonical",
+      "schema": "trace_rewrite_manifest.schema.json",
+      "verifier": "schema validation, evidence_seal_verify",
+      "purpose": "Records source trace hash, compact trace hash, canonical rows hash, and row count.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/trace_report.json",
+      "producer": "aem_poc.trace_maint.write_trace_report",
+      "schema": "trace_report.schema.json",
+      "verifier": "trace report schema validation, evidence_seal_verify",
+      "purpose": "Reviewer readout of compact trace row count, task types, chosen experts, file hash, and rows hash.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_summary.json",
+      "producer": "aem_poc.evidence_demo.write_evidence_summary",
+      "schema": "evidence_summary.schema.json",
+      "verifier": "summary schema validation, evidence_seal_verify",
+      "purpose": "Lists the expected pre-verification evidence artifacts and fails if any are missing.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_bundle_manifest.json",
+      "producer": "aem_poc.evidence_demo.write_evidence_bundle_manifest",
+      "schema": "evidence_bundle_manifest.schema.json",
+      "verifier": "aem_poc.evidence_verify, evidence_seal_verify",
+      "purpose": "Hash map for the pre-verification evidence bundle.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_verify_report.json",
+      "producer": "aem_poc.evidence_verify.write_evidence_verify_report",
+      "schema": "evidence_verify_report.schema.json",
+      "verifier": "verify report schema validation, evidence_seal_verify",
+      "purpose": "Durable result of recomputing the pre-verification bundle hashes.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/pipeline_result.json",
+      "producer": "aem_poc.evidence_pipeline.run_evidence_pipeline",
+      "schema": "evidence_pipeline_result.schema.json",
+      "verifier": "pipeline result schema validation, evidence_seal_verify",
+      "purpose": "Durable receipt for the full orchestrated evidence run.",
+      "seal_stage": "first_stage_trace_seal",
+      "role": "sealed_trace_evidence"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_seal_manifest.json",
+      "producer": "aem_poc.evidence_pipeline.write_evidence_seal_manifest",
+      "schema": "evidence_seal_manifest.schema.json",
+      "verifier": "aem_poc.evidence_seal_verify",
+      "purpose": "First-stage trace seal: hashes uploaded trace evidence artifacts except itself.",
+      "seal_stage": "first_stage_trace_seal_manifest",
+      "role": "seal_manifest"
+    },
+    {
+      "path": "runs/patch_gate_demo/evidence_seal_verify_report.json",
+      "producer": "aem_poc.evidence_seal_verify.write_evidence_seal_verify_report or make evidence-seal-verify-demo stdout redirection",
+      "schema": "evidence_seal_verify_report.schema.json",
+      "verifier": "evidence_second_stage_seal_verify",
+      "purpose": "Durable post-seal receipt for first-stage trace seal verification.",
+      "seal_stage": "second_stage_upload_receipt_seal",
+      "role": "post_seal_verification_receipt"
+    },
+    {
+      "path": "runs/upload/evidence_second_stage_seal_manifest.json",
+      "producer": "aem_poc.evidence_second_stage_seal.write_second_stage_seal_manifest",
+      "schema": "evidence_second_stage_seal_manifest.schema.json",
+      "verifier": "aem_poc.evidence_second_stage_seal_verify",
+      "purpose": "Second-stage upload receipt seal: hashes metadata and post-seal verification receipts except itself.",
+      "seal_stage": "second_stage_upload_receipt_seal_manifest",
+      "role": "second_stage_seal_manifest"
+    },
+    {
+      "path": "runs/upload/evidence_second_stage_verify_report.json",
+      "producer": "aem_poc.evidence_second_stage_seal_verify.write_second_stage_verify_report",
+      "schema": "evidence_second_stage_verify_report.schema.json",
+      "verifier": "terminal_verification_receipts policy",
+      "purpose": "Terminal verification receipt for the second-stage seal; not recursively sealed without a third-stage policy.",
+      "seal_stage": "terminal_receipt_boundary",
+      "role": "terminal_second_stage_verify_receipt"
+    }
+  ]
+}

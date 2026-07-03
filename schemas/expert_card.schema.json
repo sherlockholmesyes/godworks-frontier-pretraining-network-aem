@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://godworks.local/aem/expert_card.schema.json",
+  "title": "AEM ExpertCard",
+  "type": "object",
+  "required": [
+    "expert_id",
+    "base_model_hash",
+    "expert_type",
+    "quantization",
+    "vram_min_gb",
+    "training_objective",
+    "domains",
+    "eval_delta",
+    "license",
+    "signature"
+  ],
+  "properties": {
+    "expert_id": { "type": "string", "minLength": 1 },
+    "base_model_hash": { "type": "string", "minLength": 1 },
+    "expert_type": {
+      "type": "string",
+      "enum": [
+        "code_patch",
+        "math",
+        "verifier",
+        "planner",
+        "domain",
+        "memory",
+        "critic",
+        "distillation"
+      ]
+    },
+    "quantization": { "type": "string" },
+    "vram_min_gb": { "type": "integer", "minimum": 1 },
+    "training_objective": { "type": "string", "minLength": 1 },
+    "domains": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "eval_delta": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "negative_eval_delta": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "risk_scores": {
+      "type": "object",
+      "additionalProperties": { "type": "number", "minimum": 0 }
+    },
+    "latency_ms": { "type": "integer", "minimum": 0 },
+    "license": { "type": "string" },
+    "signature": { "type": "string", "minLength": 1 },
+    "data_hashes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

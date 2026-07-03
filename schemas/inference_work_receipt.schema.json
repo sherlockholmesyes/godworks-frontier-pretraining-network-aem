@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM InferenceWorkReceipt",
+  "type": "object",
+  "required": ["receipt_version", "receipt_id", "task_hash", "task_class", "expert_id", "expert_card_hash", "node_id", "host_advertisement_id", "credit_account", "settlement_currency", "credit_charge_micros", "work", "commitments", "challenge_surface", "duplicate_spend", "policy", "signature"],
+  "properties": {
+    "receipt_version": { "type": "string" },
+    "receipt_id": { "type": "string" },
+    "task_hash": { "type": "string" },
+    "task_class": { "type": "string" },
+    "expert_id": { "type": "string" },
+    "expert_card_hash": { "type": "string" },
+    "node_id": { "type": "string" },
+    "host_advertisement_id": { "type": "string" },
+    "credit_account": { "type": "string" },
+    "settlement_currency": { "const": "AEM_CREDIT" },
+    "credit_charge_micros": { "type": "integer", "minimum": 0 },
+    "work": {
+      "type": "object",
+      "required": ["input_tokens", "output_tokens", "wall_time_ms", "metered_cost_micros", "started_at", "completed_at"],
+      "properties": {
+        "input_tokens": { "type": "integer", "minimum": 0 },
+        "output_tokens": { "type": "integer", "minimum": 0 },
+        "wall_time_ms": { "type": "integer", "minimum": 1 },
+        "metered_cost_micros": { "type": "integer", "minimum": 0 },
+        "started_at": { "type": "string" },
+        "completed_at": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "commitments": {
+      "type": "object",
+      "required": ["prompt_commitment", "output_commitment", "route_trace_id", "nonce"],
+      "properties": {
+        "prompt_commitment": { "type": "string" },
+        "output_commitment": { "type": "string" },
+        "route_trace_id": { "type": "string" },
+        "nonce": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "challenge_surface": {
+      "type": "object",
+      "required": ["challenge_window_seconds", "challenge_methods", "replay_material_commitment", "sample_seed_commitment", "verifier_set"],
+      "properties": {
+        "challenge_window_seconds": { "type": "integer", "minimum": 1 },
+        "challenge_methods": { "type": "array", "items": { "enum": ["output_commitment_open", "route_trace_replay", "metered_cost_audit", "expert_hash_check"] } },
+        "replay_material_commitment": { "type": "string" },
+        "sample_seed_commitment": { "type": "string" },
+        "verifier_set": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "duplicate_spend": {
+      "type": "object",
+      "required": ["spend_key", "spend_scope", "previous_receipt", "idempotency_key"],
+      "properties": {
+        "spend_key": { "type": "string" },
+        "spend_scope": { "enum": ["task_expert_node_nonce", "route_trace_nonce"] },
+        "previous_receipt": { "type": ["string", "null"] },
+        "idempotency_key": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "required": ["privacy_class", "sandbox_profile", "allowed_for_credit", "receipt_requirements"],
+      "properties": {
+        "privacy_class": { "enum": ["public", "redacted", "private_prohibited"] },
+        "sandbox_profile": { "type": "string" },
+        "allowed_for_credit": { "type": "boolean" },
+        "receipt_requirements": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "signature": { "type": "string" }
+  },
+  "additionalProperties": false
+}

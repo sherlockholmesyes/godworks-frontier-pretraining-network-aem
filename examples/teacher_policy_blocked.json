@@ -1,0 +1,12 @@
+{
+  "teacher_id": "blocked-teacher-demo",
+  "teacher_type": "api",
+  "license": "restricted-demo",
+  "allowed_for_training": false,
+  "allowed_outputs_retention": true,
+  "allowed_for_commercial_use": false,
+  "terms_version": "demo-2026-07-01",
+  "data_policy": "training use is not allowed in this demo",
+  "notes": "The pipeline must reject samples from this card before training.",
+  "signature": "sig:blocked-teacher-demo"
+}

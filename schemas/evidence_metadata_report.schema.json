@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM EvidenceMetadataReport",
+  "type": "object",
+  "required": ["index_path", "markdown_path", "json_index", "markdown_index", "artifact_drift", "ok"],
+  "properties": {
+    "index_path": { "type": "string" },
+    "markdown_path": { "type": "string" },
+    "json_index": {
+      "type": "object",
+      "required": ["index_path", "index_version", "artifact_count", "unique_path_count", "matches_generated", "ok"],
+      "properties": {
+        "index_path": { "type": "string" },
+        "index_version": { "type": "string" },
+        "artifact_count": { "type": "integer", "minimum": 0 },
+        "unique_path_count": { "type": "integer", "minimum": 0 },
+        "matches_generated": { "type": "boolean" },
+        "ok": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "markdown_index": {
+      "type": "object",
+      "required": ["matches_generated", "ok"],
+      "properties": {
+        "matches_generated": { "type": "boolean" },
+        "ok": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "artifact_drift": {
+      "type": "object",
+      "required": ["index_path", "expected_count", "indexed_count", "missing_paths", "extra_paths", "sealed_without_verifier", "ok"],
+      "properties": {
+        "index_path": { "type": "string" },
+        "expected_count": { "type": "integer", "minimum": 0 },
+        "indexed_count": { "type": "integer", "minimum": 0 },
+        "missing_paths": { "type": "array", "items": { "type": "string" } },
+        "extra_paths": { "type": "array", "items": { "type": "string" } },
+        "sealed_without_verifier": { "type": "array", "items": { "type": "string" } },
+        "ok": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "ok": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

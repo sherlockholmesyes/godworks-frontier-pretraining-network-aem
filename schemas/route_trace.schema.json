@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM RouteTrace",
+  "type": "object",
+  "required": ["trace_id", "task_id", "task_type", "router_version", "candidate_experts", "created_at"],
+  "properties": {
+    "trace_id": { "type": "string" },
+    "task_id": { "type": "string" },
+    "task_type": { "type": "string" },
+    "router_version": { "type": "string" },
+    "candidate_experts": { "type": "array", "items": { "type": "string" } },
+    "chosen_expert": { "type": ["string", "null"] },
+    "created_at": { "type": "string" }
+  },
+  "additionalProperties": true
+}

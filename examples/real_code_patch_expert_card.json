@@ -1,0 +1,21 @@
+{
+  "expert_id": "real_patch_expert",
+  "base_model_hash": "base:demo",
+  "expert_type": "code_patch",
+  "quantization": "4bit_nf4+lora",
+  "vram_min_gb": 12,
+  "training_objective": "demo code patch",
+  "domains": ["code", "python"],
+  "eval_delta": {
+    "code_patch": 0.10
+  },
+  "negative_eval_delta": {},
+  "risk_scores": {
+    "duplicate": 0.01,
+    "backdoor": 0.0
+  },
+  "latency_ms": 100,
+  "license": "research-demo",
+  "signature": "sig:real_patch_expert",
+  "data_hashes": ["sha256:demo"]
+}

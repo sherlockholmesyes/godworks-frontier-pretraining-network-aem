@@ -1,0 +1,42 @@
+name: AEM CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-and-trace:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run local CI gate
+        run: make evidence-local-ci
+
+      - name: Upload trace evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: aem-trace-evidence
+          if-no-files-found: error
+          # BEGIN AEM GENERATED UPLOAD PATHS
+          path: |
+            runs/metadata/evidence_metadata_report.json
+            runs/patch_gate_demo/route_trace.jsonl
+            runs/patch_gate_demo/route_trace.compact.jsonl
+            runs/patch_gate_demo/route_trace.compact.jsonl.manifest.json
+            runs/patch_gate_demo/trace_report.json
+            runs/patch_gate_demo/evidence_summary.json
+            runs/patch_gate_demo/evidence_bundle_manifest.json
+            runs/patch_gate_demo/evidence_verify_report.json
+            runs/patch_gate_demo/pipeline_result.json
+            runs/patch_gate_demo/evidence_seal_manifest.json
+            runs/patch_gate_demo/evidence_seal_verify_report.json
+            runs/upload/evidence_second_stage_seal_manifest.json
+            runs/upload/evidence_second_stage_verify_report.json
+          # END AEM GENERATED UPLOAD PATHS

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM TrainingReceipt",
+  "type": "object",
+  "required": ["receipt_id", "expert_id", "base_model_hash", "recipe_hash", "data_shard_ids", "eval_before", "eval_after", "artifact_hashes", "signature"],
+  "properties": {
+    "receipt_id": { "type": "string" },
+    "expert_id": { "type": "string" },
+    "base_model_hash": { "type": "string" },
+    "recipe_hash": { "type": "string" },
+    "data_shard_ids": { "type": "array", "items": { "type": "string" } },
+    "eval_before": { "type": "object", "additionalProperties": { "type": "number" } },
+    "eval_after": { "type": "object", "additionalProperties": { "type": "number" } },
+    "artifact_hashes": { "type": "array", "items": { "type": "string" } },
+    "signature": { "type": "string" }
+  },
+  "additionalProperties": false
+}

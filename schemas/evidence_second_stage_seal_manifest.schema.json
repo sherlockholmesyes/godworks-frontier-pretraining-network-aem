@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM EvidenceSecondStageSealManifest",
+  "type": "object",
+  "required": ["stage", "policy_version", "inherits_first_stage_seal", "artifact_count", "sealed_artifacts", "excluded_artifacts"],
+  "properties": {
+    "stage": { "type": "string" },
+    "policy_version": { "type": "string" },
+    "inherits_first_stage_seal": { "type": "string" },
+    "artifact_count": { "type": "integer", "minimum": 0 },
+    "sealed_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "role", "size_bytes", "sha256"],
+        "properties": {
+          "path": { "type": "string" },
+          "role": { "type": "string" },
+          "size_bytes": { "type": "integer", "minimum": 0 },
+          "sha256": { "type": "string", "minLength": 64, "maxLength": 64 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "excluded_artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

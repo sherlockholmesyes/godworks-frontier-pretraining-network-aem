@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM NodeCard",
+  "type": "object",
+  "required": ["card_version", "node_id", "owner_key", "signature", "locality", "capacity", "economic_policy", "host_policy", "available_roles", "advertised_experts", "receipts_required"],
+  "properties": {
+    "card_version": { "type": "string" },
+    "node_id": { "type": "string" },
+    "owner_key": { "type": "string" },
+    "signature": { "type": "string" },
+    "locality": {
+      "type": "object",
+      "required": ["bucket", "jurisdiction_hint", "exact_location_disclosed"],
+      "properties": {
+        "bucket": { "type": "string" },
+        "jurisdiction_hint": { "type": "string" },
+        "exact_location_disclosed": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "capacity": {
+      "type": "object",
+      "required": ["compute_class", "gpu_count", "gpu_vram_gb", "ram_gb", "bandwidth_mbps", "max_concurrent_jobs", "uptime_window_hours"],
+      "properties": {
+        "compute_class": { "type": "string" },
+        "gpu_count": { "type": "integer", "minimum": 0 },
+        "gpu_vram_gb": { "type": "integer", "minimum": 0 },
+        "ram_gb": { "type": "integer", "minimum": 1 },
+        "bandwidth_mbps": { "type": "integer", "minimum": 1 },
+        "max_concurrent_jobs": { "type": "integer", "minimum": 1 },
+        "uptime_window_hours": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "economic_policy": {
+      "type": "object",
+      "required": ["credit_account", "settlement_currency", "earning_roles", "min_inference_credit_rate_micros", "min_training_credit_rate_micros", "min_verification_credit_rate_micros", "collateral_required_micros", "resale_allowed"],
+      "properties": {
+        "credit_account": { "type": "string" },
+        "settlement_currency": { "const": "AEM_CREDIT" },
+        "earning_roles": { "type": "array", "items": { "enum": ["inference", "training", "verification"] } },
+        "min_inference_credit_rate_micros": { "type": "integer", "minimum": 0 },
+        "min_training_credit_rate_micros": { "type": "integer", "minimum": 0 },
+        "min_verification_credit_rate_micros": { "type": "integer", "minimum": 0 },
+        "collateral_required_micros": { "type": "integer", "minimum": 0 },
+        "resale_allowed": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "host_policy": {
+      "type": "object",
+      "required": ["accepted_task_classes", "rejected_task_classes", "max_prompt_privacy_class", "sandbox_profiles"],
+      "properties": {
+        "accepted_task_classes": { "type": "array", "items": { "type": "string" } },
+        "rejected_task_classes": { "type": "array", "items": { "type": "string" } },
+        "max_prompt_privacy_class": { "enum": ["public", "redacted", "private_prohibited"] },
+        "sandbox_profiles": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "available_roles": { "type": "array", "items": { "enum": ["inference", "training", "verification"] } },
+    "advertised_experts": { "type": "array", "items": { "type": "string" } },
+    "receipts_required": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEM Network Brick Ledger",
+  "type": "object",
+  "required": ["ledger_version", "network_third", "brick_count", "status_counts", "missing_primitives", "bricks"],
+  "properties": {
+    "ledger_version": { "type": "string" },
+    "network_third": { "type": "string" },
+    "brick_count": { "type": "integer", "minimum": 0 },
+    "status_counts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "missing_primitives": { "type": "array", "items": { "type": "string" } },
+    "bricks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "status", "purpose", "wrong1", "death1", "wrong2", "death2", "third", "definition", "nodes", "primitive_closure", "minimal_tests", "kill_criteria", "next_pressure"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "status": { "enum": ["closed_poc", "proto_brick", "research_packet"] },
+          "purpose": { "type": "string" },
+          "wrong1": { "type": "string" },
+          "death1": { "type": "string" },
+          "wrong2": { "type": "string" },
+          "death2": { "type": "string" },
+          "third": { "type": "string" },
+          "definition": {
+            "type": "object",
+            "required": ["input", "operation", "output", "measurable_delta"],
+            "properties": {
+              "input": { "type": "string" },
+              "operation": { "type": "string" },
+              "output": { "type": "string" },
+              "measurable_delta": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "type", "purpose", "primitive_status"],
+              "properties": {
+                "id": { "type": "string" },
+                "type": { "type": "string" },
+                "purpose": { "type": "string" },
+                "primitive_status": { "enum": ["stable_primitive", "proto_primitive", "missing_primitive", "composite"] }
+              },
+              "additionalProperties": false
+            }
+          },
+          "primitive_closure": {
+            "type": "object",
+            "required": ["closure_status", "stable_primitives", "proto_primitives", "missing_primitives"],
+            "properties": {
+              "closure_status": { "enum": ["closed", "partially_closed", "open"] },
+              "stable_primitives": { "type": "array", "items": { "type": "string" } },
+              "proto_primitives": { "type": "array", "items": { "type": "string" } },
+              "missing_primitives": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          },
+          "minimal_tests": { "type": "array", "items": { "type": "string" } },
+          "kill_criteria": { "type": "array", "items": { "type": "string" } },
+          "next_pressure": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
