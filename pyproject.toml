@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Accretive Expert Mesh proof-of-concept router/admission skeleton"
 requires-python = ">=3.10"
 readme = "README.md"
-authors = [{ name = "Godworks" }]
+authors = [{ name = "AEM Contributors" }]
 
 [project.scripts]
 aem-demo = "aem_poc.demo:main"

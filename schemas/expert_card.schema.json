@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://godworks.local/aem/expert_card.schema.json",
+  "$id": "https://frontier-pretraining-network.local/aem/expert_card.schema.json",
   "title": "AEM ExpertCard",
   "type": "object",
   "required": [

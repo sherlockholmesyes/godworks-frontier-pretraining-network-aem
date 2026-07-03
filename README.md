@@ -1,6 +1,6 @@
-# Godworks Frontier Pretraining Network — AEM PoC
+# Frontier Pretraining Network - AEM PoC
 
-[![AEM CI](https://github.com/sherlockholmesyes/godworks-frontier-pretraining-network-aem/actions/workflows/ci.yml/badge.svg)](https://github.com/sherlockholmesyes/godworks-frontier-pretraining-network-aem/actions/workflows/ci.yml)
+[![AEM CI](https://github.com/sherlockholmesyes/frontier-pretraining-network-aem/actions/workflows/ci.yml/badge.svg)](https://github.com/sherlockholmesyes/frontier-pretraining-network-aem/actions/workflows/ci.yml)
 
 **AEM = Accretive Expert Mesh**
 

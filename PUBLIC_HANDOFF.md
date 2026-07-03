@@ -1,6 +1,6 @@
 # AEM Public Handoff Pack
 
-Repository: https://github.com/sherlockholmesyes/godworks-frontier-pretraining-network-aem  
+Repository: https://github.com/sherlockholmesyes/frontier-pretraining-network-aem  
 Public framing name: **AEM - expert/adaptation admission PoC**  
 Audience: OSS contributors, evaluator builders, adapter/training pipeline builders  
 Status: **early runnable PoC, not a real trainer, not a product**
@@ -635,7 +635,7 @@ Do not add unnecessary dependencies.
 Make the smallest useful patch.
 
 Repo:
-https://github.com/sherlockholmesyes/godworks-frontier-pretraining-network-aem
+https://github.com/sherlockholmesyes/frontier-pretraining-network-aem
 
 Task:
 <PASTE ONE TASK CARD HERE>

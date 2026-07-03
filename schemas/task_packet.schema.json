@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://godworks.local/aem/task_packet.schema.json",
+  "$id": "https://frontier-pretraining-network.local/aem/task_packet.schema.json",
   "title": "AEM TaskPacket",
   "type": "object",
   "required": ["task_id", "task_type", "prompt"],
